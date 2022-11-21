@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using BookMyShow.Models;
+﻿using BookMyShow.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace BookMyShow.Data;
 
@@ -9,11 +10,29 @@ public partial class BookMyShowContext : DbContext
 {
     public BookMyShowContext()
     {
+        try
+        {
+            var databaseCreator = (Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator);
+            databaseCreator.CreateTables();
+        }
+        catch (SqlException)
+        {
+            //A SqlException will be thrown if tables already exist. So simply ignore it.
+        }
     }
 
     public BookMyShowContext(DbContextOptions<BookMyShowContext> options)
         : base(options)
     {
+        try
+        {
+            var databaseCreator = (Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator);
+            databaseCreator.CreateTables();
+        }
+        catch (SqlException)
+        {
+            //A SqlException will be thrown if tables already exist. So simply ignore it.
+        }
     }
 
     public virtual DbSet<Actor> Actors { get; set; }
@@ -294,12 +313,14 @@ public partial class BookMyShowContext : DbContext
             entity.Property(e => e.ActorId).HasColumnName("actor_id");
             entity.Property(e => e.MovieId).HasColumnName("movie_id");
 
-            entity.HasOne(d => d.Actor).WithMany(p => p.MovieActorMaps)
+            entity.HasOne<Actor>()
+                .WithMany(d => d.MovieActorMaps)
                 .HasForeignKey(d => d.ActorId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("movie_actor_map$movie_actor_map_ibfk_2");
 
-            entity.HasOne(d => d.Movie).WithMany(p => p.MovieActorMaps)
+            entity.HasOne<Movie>()
+                .WithMany(d => d.MovieActorMaps)
                 .HasForeignKey(d => d.MovieId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("movie_actor_map$movie_actor_map_ibfk_1");

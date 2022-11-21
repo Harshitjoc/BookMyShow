@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BookMyShow.Data;
 using BookMyShow.Models;
@@ -78,8 +73,6 @@ namespace BookMyShow.Controllers
         [HttpPost]
         public async Task<ActionResult<MovieActorMap>> PostMovieActorMap(MovieActorMap movieActorMap)
         {
-            movieActorMap.Actor = new Actor { Id= movieActorMap.ActorId };
-            movieActorMap.Movie = new Movie { Id = movieActorMap.MovieId };
             _context.MovieActorMaps.Add(movieActorMap);
             try
             {
