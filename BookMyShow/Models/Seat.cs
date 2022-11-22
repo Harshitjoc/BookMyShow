@@ -1,4 +1,7 @@
-﻿namespace BookMyShow.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace BookMyShow.Models;
 
 public partial class Seat
 {

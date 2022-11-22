@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BookMyShow.Data;
 using BookMyShow.Models;
@@ -20,7 +25,7 @@ namespace BookMyShow.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Actor>>> GetActors()
         {
-            return await _context.Actors.Include("MovieActorMaps").ToListAsync();
+            return await _context.Actors.ToListAsync();
         }
 
         // GET: api/Actors/5
