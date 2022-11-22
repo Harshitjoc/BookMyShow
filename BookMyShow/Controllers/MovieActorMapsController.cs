@@ -78,8 +78,6 @@ namespace BookMyShow.Controllers
         [HttpPost]
         public async Task<ActionResult<MovieActorMap>> PostMovieActorMap(MovieActorMap movieActorMap)
         {
-            movieActorMap.Actor = new Actor { Id= movieActorMap.ActorId };
-            movieActorMap.Movie = new Movie { Id = movieActorMap.MovieId };
             _context.MovieActorMaps.Add(movieActorMap);
             try
             {
