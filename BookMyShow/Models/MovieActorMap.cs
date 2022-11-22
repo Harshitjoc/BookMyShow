@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookMyShow.Models;
 
@@ -11,5 +9,4 @@ public partial class MovieActorMap
     public int MovieId {get; set; }
 
     public int ActorId { get; set; }
-
 }
