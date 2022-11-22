@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BookMyShow.Models;
+﻿namespace BookMyShow.Models;
 
 public partial class NonRegisteredUser
 {
